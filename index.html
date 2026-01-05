@@ -590,20 +590,28 @@
         let currentComics = [];
         let currentComicIndex = 0;
 
-        // Global view tracking system using CountAPI
-        const COUNTER_NAMESPACE = 'dan-comics-github-io';
+        // Global view tracking system
+        // Using a simple approach with a reliable counter service
         const COUNTER_API_BASE = 'https://api.countapi.xyz';
+        const COUNTER_NAMESPACE = 'dancomics';
 
         function getComicKey(series, title) {
             // Create a unique key for each comic
-            return `${series}_${title}`.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+            return `${series}_${title}`.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
         }
 
         async function getViewCount(series, title) {
             const key = getComicKey(series, title);
+            const url = `${COUNTER_API_BASE}/get/${COUNTER_NAMESPACE}/${key}`;
+
             try {
-                const response = await fetch(`${COUNTER_API_BASE}/get/${COUNTER_NAMESPACE}/${key}`);
+                const response = await fetch(url);
+                if (!response.ok) {
+                    console.log('Counter does not exist yet, will be created on first view');
+                    return 0;
+                }
                 const data = await response.json();
+                console.log('Fetched view count for', key, ':', data);
                 return data.value || 0;
             } catch (error) {
                 console.error('Error fetching view count:', error);
@@ -613,9 +621,12 @@
 
         async function incrementView(series, title) {
             const key = getComicKey(series, title);
+            const url = `${COUNTER_API_BASE}/hit/${COUNTER_NAMESPACE}/${key}`;
+
             try {
-                const response = await fetch(`${COUNTER_API_BASE}/hit/${COUNTER_NAMESPACE}/${key}`);
+                const response = await fetch(url);
                 const data = await response.json();
+                console.log('Incremented view count for', key, ':', data);
                 return data.value || 1;
             } catch (error) {
                 console.error('Error incrementing view count:', error);
