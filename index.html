@@ -565,29 +565,37 @@
         let currentComics = [];
         let currentComicIndex = 0;
 
-        // Global view tracking system
-        // Using a simple approach with a reliable counter service
-        const COUNTER_API_BASE = 'https://api.countapi.xyz';
-        const COUNTER_NAMESPACE = 'dancomics';
+        // Global view tracking system using CountAPI.xyz
+        // Each counter is automatically created on first hit
+        const COUNTER_NAMESPACE = 'dancomics-evan-sd';
+        const COUNTER_API = 'https://api.countapi.xyz';
 
         function getComicKey(series, title) {
-            // Create a unique key for each comic
-            return `${series}_${title}`.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
+            // Create a clean, URL-safe key
+            const key = `${series}-${title}`
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-|-$/g, '')
+                .substring(0, 64); // CountAPI has a 64 char limit
+            return key;
         }
 
         async function getViewCount(series, title) {
             const key = getComicKey(series, title);
-            const url = `${COUNTER_API_BASE}/get/${COUNTER_NAMESPACE}/${key}`;
+            const url = `${COUNTER_API}/get/${COUNTER_NAMESPACE}/${key}`;
 
             try {
                 const response = await fetch(url);
-                if (!response.ok) {
-                    console.log('Counter does not exist yet, will be created on first view');
+                const data = await response.json();
+
+                if (response.ok && data.value !== undefined) {
+                    console.log(`Got view count for ${key}:`, data.value);
+                    return data.value;
+                } else {
+                    // Counter doesn't exist yet, will be created on first hit
+                    console.log(`Counter ${key} doesn't exist yet, returning 0`);
                     return 0;
                 }
-                const data = await response.json();
-                console.log('Fetched view count for', key, ':', data);
-                return data.value || 0;
             } catch (error) {
                 console.error('Error fetching view count:', error);
                 return 0;
@@ -596,21 +604,50 @@
 
         async function incrementView(series, title) {
             const key = getComicKey(series, title);
-            const url = `${COUNTER_API_BASE}/hit/${COUNTER_NAMESPACE}/${key}`;
+            const url = `${COUNTER_API}/hit/${COUNTER_NAMESPACE}/${key}`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
-                console.log('Incremented view count for', key, ':', data);
-                return data.value || 1;
+
+                if (response.ok && data.value !== undefined) {
+                    console.log(`Incremented view count for ${key}:`, data.value);
+                    return data.value;
+                } else {
+                    console.error('Failed to increment counter:', data);
+                    return 1;
+                }
             } catch (error) {
                 console.error('Error incrementing view count:', error);
                 return 1;
             }
         }
 
+        // Test function to verify counter is working
+        async function testCounter() {
+            console.log('Testing counter API...');
+            const testKey = 'test-connection';
+            const url = `${COUNTER_API}/hit/${COUNTER_NAMESPACE}/${testKey}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log('Counter test result:', data);
+                return data.value !== undefined;
+            } catch (error) {
+                console.error('Counter test failed:', error);
+                return false;
+            }
+        }
+
         // Initialize the page
         async function init() {
+            // Test counter API first
+            const counterWorks = await testCounter();
+            if (!counterWorks) {
+                console.warn('Counter API may not be working properly');
+            }
+
             await loadSeriesFromGitHub();
             loadSeries();
         }
