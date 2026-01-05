@@ -534,57 +534,27 @@
     </div>
 
     <script>
-        // Comic series data structure
-        const comicSeries = [
-            {
-                name: "Original Dan",
-                folder: "Origional Dan",
-                color: "#FF6B6B",
-                icon: "⭐"
-            },
-            {
-                name: "Dan Funnies",
-                folder: "Dan Funnies",
-                color: "#4ECDC4",
-                icon: "😂"
-            },
-            {
-                name: "Cheez Dame",
-                folder: "Cheez Dame",
-                color: "#FFD93D",
-                icon: "🧀"
-            },
-            {
-                name: "Dan Music",
-                folder: "Dan Music",
-                color: "#95E1D3",
-                icon: "🎵"
-            },
-            {
-                name: "Dan Ice Cream",
-                folder: "Dan Ice cream",
-                color: "#F38181",
-                icon: "🍦"
-            },
-            {
-                name: "Dan Shorts",
-                folder: "Dan Shorts",
-                color: "#AA96DA",
-                icon: "🎬"
-            },
-            {
-                name: "Dan Science",
-                folder: "Dan Science",
-                color: "#FCBAD3",
-                icon: "🔬"
-            },
-            {
-                name: "More Series Here",
-                folder: "More Series Here",
-                color: "#A8E6CF",
-                icon: "✨"
-            }
-        ];
+        // Comic series data structure - will be populated dynamically
+        let comicSeries = [];
+
+        // GitHub repository information
+        const GITHUB_REPO_OWNER = 'dan-comics';
+        const GITHUB_REPO_NAME = 'dan-comics.github.io';
+        const GITHUB_API_BASE = 'https://api.github.com';
+
+        // Series icons and colors mapping
+        // To customize a new series, add it here with format: 'Folder Name': { icon: 'emoji', color: '#HEX' }
+        // If a folder is not listed here, it will get a default book icon and random color
+        const seriesConfig = {
+            'Origional Dan': { icon: '⭐', color: '#FF6B6B' },
+            'Dan Funnies': { icon: '😂', color: '#4ECDC4' },
+            'Cheez Dame': { icon: '🧀', color: '#FFD93D' },
+            'Dan Music': { icon: '🎵', color: '#95E1D3' },
+            'Dan Ice cream': { icon: '🍦', color: '#F38181' },
+            'Dan Shorts': { icon: '🎬', color: '#AA96DA' },
+            'Dan Science': { icon: '🔬', color: '#FCBAD3' },
+            'More Series Here': { icon: '✨', color: '#A8E6CF' }
+        };
 
         let currentSeries = null;
         let currentComics = [];
@@ -635,8 +605,69 @@
         }
 
         // Initialize the page
-        function init() {
+        async function init() {
+            await loadSeriesFromGitHub();
             loadSeries();
+        }
+
+        // Load series folders dynamically from GitHub
+        async function loadSeriesFromGitHub() {
+            try {
+                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website`;
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    console.error('Failed to load from GitHub, using fallback');
+                    loadFallbackSeries();
+                    return;
+                }
+
+                const items = await response.json();
+
+                // Filter to only directories (folders)
+                const folders = items.filter(item => item.type === 'dir');
+
+                // Create series array from discovered folders
+                comicSeries = folders.map(folder => {
+                    const folderName = folder.name;
+                    const config = seriesConfig[folderName] || {
+                        icon: '📚',
+                        color: getRandomColor()
+                    };
+
+                    return {
+                        name: folderName,
+                        folder: folderName,
+                        color: config.color,
+                        icon: config.icon
+                    };
+                });
+
+                console.log('Loaded series from GitHub:', comicSeries);
+            } catch (error) {
+                console.error('Error loading series from GitHub:', error);
+                loadFallbackSeries();
+            }
+        }
+
+        // Fallback series if GitHub API fails
+        function loadFallbackSeries() {
+            comicSeries = [
+                { name: "Origional Dan", folder: "Origional Dan", color: "#FF6B6B", icon: "⭐" },
+                { name: "Dan Funnies", folder: "Dan Funnies", color: "#4ECDC4", icon: "😂" },
+                { name: "Cheez Dame", folder: "Cheez Dame", color: "#FFD93D", icon: "🧀" },
+                { name: "Dan Music", folder: "Dan Music", color: "#95E1D3", icon: "🎵" },
+                { name: "Dan Ice cream", folder: "Dan Ice cream", color: "#F38181", icon: "🍦" },
+                { name: "Dan Shorts", folder: "Dan Shorts", color: "#AA96DA", icon: "🎬" },
+                { name: "Dan Science", folder: "Dan Science", color: "#FCBAD3", icon: "🔬" },
+                { name: "More Series Here", folder: "More Series Here", color: "#A8E6CF", icon: "✨" }
+            ];
+        }
+
+        // Generate a random color for new series
+        function getRandomColor() {
+            const colors = ['#FF6B6B', '#4ECDC4', '#FFD93D', '#95E1D3', '#F38181', '#AA96DA', '#FCBAD3', '#A8E6CF'];
+            return colors[Math.floor(Math.random() * colors.length)];
         }
 
         // Load all series
@@ -721,80 +752,40 @@
             });
         }
 
-        // Get comics for a series
+        // Get comics for a series - dynamically from GitHub
         async function getComicsForSeries(folder) {
-            const comicsData = {
-                "Origional Dan": [
-                    "1st Dan Comic ever!!!!!.jpeg",
-                    "Intro to Dan!.jpeg",
-                    "The Quest.jpeg",
-                    "Butt Man.jpeg",
-                    "NNN's Hard Mission.jpeg",
-                    "Weightlift Like CRAZY!!!!!.jpeg"
-                ],
-                "Dan Funnies": [
-                    "A Plane Crash.jpeg",
-                    "Breakfast Cereal.jpeg",
-                    "Dan Craves Mc Dono.jpeg",
-                    "Dan's Diet.jpeg",
-                    "Egg Tossing.jpeg",
-                    "Helicopter.jpeg",
-                    "IMG_0639.jpeg",
-                    "Mount Vesuvius.jpeg",
-                    "The Email.jpeg",
-                    "The Gas Truck.jpeg",
-                    "The Toothpaste Ad .jpeg",
-                    "Trader Joe's.jpeg"
-                ],
-                "Cheez Dame": [
-                    "Cheez Math.jpeg",
-                    "Condiment Cooper's Big Fight.jpeg",
-                    "Dame's Big Fight.jpeg",
-                    "Fire Dame.jpeg",
-                    "Mega Millie.jpeg",
-                    "Milk Noah Part 1.jpeg",
-                    "Milk Noah Part 2.jpeg",
-                    "Milk Noah's Big Fight.jpeg",
-                    "Super Cheez Dame .jpeg",
-                    "The Cheez Blaster.jpeg",
-                    "The Cheez World.jpeg",
-                    "The Disease World.jpeg",
-                    "The Shiny Cheez.jpeg"
-                ],
-                "Dan Music": [
-                    "The Conductor.jpeg",
-                    "The Recorder Plug.jpeg"
-                ],
-                "Dan Ice cream": [
-                    "The Foam Pit.jpeg",
-                    "Mom's Ice Cream.jpeg"
-                ],
-                "Dan Shorts": [
-                    "Jeff Excersises.jpeg",
-                    "NNN Upgrades.jpeg"
-                ],
-                "Dan Science": [],
-                "More Series Here": [
-                    "Dan Biscoff.jpeg",
-                    "Dan Shrinks To An Atom.jpeg",
-                    "Dan Spinning.jpeg",
-                    "Danime.jpeg",
-                    "Giant Mutated Zombie With A Mile Long Sword Vs Nathan.jpeg",
-                    "House Battle.jpeg",
-                    "I Want Candy Cane.jpeg",
-                    "Kung Fu.jpeg",
-                    "Nathan Joins The Cool Crew.jpeg",
-                    "Outlogicked.jpeg",
-                    "Tapu Koko Blasts Dan.jpeg",
-                    "The YMCA Party.jpeg"
-                ]
-            };
+            try {
+                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website/${encodeURIComponent(folder)}`;
+                const response = await fetch(url);
 
-            const files = comicsData[folder] || [];
-            return files.map(file => ({
-                title: file.replace('.jpeg', '').replace('.jpg', '').replace('.png', ''),
-                path: 'Website/' + encodeURIComponent(folder) + '/' + encodeURIComponent(file)
-            }));
+                if (!response.ok) {
+                    console.error('Failed to load comics from GitHub for', folder);
+                    return [];
+                }
+
+                const items = await response.json();
+
+                // Filter to only image files (jpeg, jpg, png, gif, pdf)
+                const imageExtensions = ['.jpeg', '.jpg', '.png', '.gif', '.pdf'];
+                const imageFiles = items.filter(item => {
+                    if (item.type !== 'file') return false;
+                    const ext = item.name.toLowerCase().substring(item.name.lastIndexOf('.'));
+                    return imageExtensions.includes(ext);
+                });
+
+                // Convert to comic objects
+                const comics = imageFiles.map(file => ({
+                    title: file.name.replace(/\.(jpeg|jpg|png|gif|pdf)$/i, ''),
+                    path: `Website/${folder}/${file.name}`
+                }));
+
+                console.log(`Loaded ${comics.length} comics from ${folder}:`, comics);
+                return comics;
+
+            } catch (error) {
+                console.error('Error loading comics from GitHub:', error);
+                return [];
+            }
         }
 
         // Go back to series view
