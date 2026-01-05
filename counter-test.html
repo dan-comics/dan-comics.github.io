@@ -104,7 +104,7 @@
 
         async function testHit() {
             const key = 'test-counter';
-            const url = `${COUNTER_API}/hit/${COUNTER_NAMESPACE}/${key}`;
+            const url = `${COUNTER_API}/update/${COUNTER_NAMESPACE}/${key}?amount=1`;
 
             try {
                 console.log('Calling:', url);
@@ -131,7 +131,7 @@
 
         async function testGet() {
             const key = 'test-counter';
-            const url = `${COUNTER_API}/get/${COUNTER_NAMESPACE}/${key}`;
+            const url = `${COUNTER_API}/update/${COUNTER_NAMESPACE}/${key}?amount=0`;
 
             try {
                 console.log('Calling:', url);
@@ -164,7 +164,7 @@
                 .replace(/[^a-z0-9]+/g, '-')
                 .replace(/^-|-$/g, '');
 
-            const hitUrl = `${COUNTER_API}/hit/${COUNTER_NAMESPACE}/${key}`;
+            const hitUrl = `${COUNTER_API}/update/${COUNTER_NAMESPACE}/${key}?amount=1`;
 
             try {
                 console.log('Testing comic counter with key:', key);

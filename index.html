@@ -565,89 +565,81 @@
         let currentComics = [];
         let currentComicIndex = 0;
 
-        // Global view tracking system using CountAPI.xyz
-        // Each counter is automatically created on first hit
+        // Global view tracking using CountAPI.xyz with proper initialization
         const COUNTER_NAMESPACE = 'dancomics-evan-sd';
         const COUNTER_API = 'https://api.countapi.xyz';
 
         function getComicKey(series, title) {
-            // Create a clean, URL-safe key
             const key = `${series}-${title}`
                 .toLowerCase()
                 .replace(/[^a-z0-9]+/g, '-')
                 .replace(/^-|-$/g, '')
-                .substring(0, 64); // CountAPI has a 64 char limit
+                .substring(0, 64);
             return key;
         }
 
-        async function getViewCount(series, title) {
+        // Create or update counter - ensures counter exists and returns current value
+        async function ensureCounterExists(series, title) {
             const key = getComicKey(series, title);
-            const url = `${COUNTER_API}/get/${COUNTER_NAMESPACE}/${key}`;
+            // Use /update endpoint which creates if doesn't exist, otherwise increments by 0 (no change)
+            const url = `${COUNTER_API}/update/${COUNTER_NAMESPACE}/${key}?amount=0`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
 
                 if (response.ok && data.value !== undefined) {
-                    console.log(`Got view count for ${key}:`, data.value);
                     return data.value;
                 } else {
-                    // Counter doesn't exist yet, will be created on first hit
-                    console.log(`Counter ${key} doesn't exist yet, returning 0`);
-                    return 0;
+                    // If update fails, try to create it
+                    const createUrl = `${COUNTER_API}/create?namespace=${COUNTER_NAMESPACE}&key=${key}&value=0`;
+                    const createResponse = await fetch(createUrl);
+                    const createData = await createResponse.json();
+                    return createData.value || 0;
                 }
             } catch (error) {
-                console.error('Error fetching view count:', error);
+                console.error('Error ensuring counter exists:', error);
                 return 0;
             }
         }
 
+        async function getViewCount(series, title) {
+            const key = getComicKey(series, title);
+
+            // First ensure counter exists
+            const value = await ensureCounterExists(series, title);
+            console.log(`View count for ${key}:`, value);
+            return value;
+        }
+
         async function incrementView(series, title) {
             const key = getComicKey(series, title);
-            const url = `${COUNTER_API}/hit/${COUNTER_NAMESPACE}/${key}`;
+            // Use /update with amount=1 to increment
+            const url = `${COUNTER_API}/update/${COUNTER_NAMESPACE}/${key}?amount=1`;
 
             try {
                 const response = await fetch(url);
                 const data = await response.json();
 
                 if (response.ok && data.value !== undefined) {
-                    console.log(`Incremented view count for ${key}:`, data.value);
+                    console.log(`Incremented ${key} to:`, data.value);
                     return data.value;
                 } else {
-                    console.error('Failed to increment counter:', data);
-                    return 1;
+                    console.error('Failed to increment:', data);
+                    // Fallback: ensure it exists then try again
+                    await ensureCounterExists(series, title);
+                    const retryResponse = await fetch(url);
+                    const retryData = await retryResponse.json();
+                    return retryData.value || 1;
                 }
             } catch (error) {
-                console.error('Error incrementing view count:', error);
+                console.error('Error incrementing view:', error);
                 return 1;
-            }
-        }
-
-        // Test function to verify counter is working
-        async function testCounter() {
-            console.log('Testing counter API...');
-            const testKey = 'test-connection';
-            const url = `${COUNTER_API}/hit/${COUNTER_NAMESPACE}/${testKey}`;
-
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                console.log('Counter test result:', data);
-                return data.value !== undefined;
-            } catch (error) {
-                console.error('Counter test failed:', error);
-                return false;
             }
         }
 
         // Initialize the page
         async function init() {
-            // Test counter API first
-            const counterWorks = await testCounter();
-            if (!counterWorks) {
-                console.warn('Counter API may not be working properly');
-            }
-
             await loadSeriesFromGitHub();
             loadSeries();
         }
