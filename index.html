@@ -707,7 +707,7 @@
             const files = comicsData[folder] || [];
             return files.map(file => ({
                 title: file.replace('.jpeg', '').replace('.jpg', '').replace('.png', ''),
-                path: encodeURI(folder) + '/' + encodeURIComponent(file)
+                path: 'Website/' + encodeURI(folder) + '/' + encodeURIComponent(file)
             }));
         }
 
