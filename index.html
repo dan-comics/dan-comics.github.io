@@ -276,9 +276,9 @@
         }
 
         .lightbox-close {
-            position: absolute;
-            top: -50px;
-            right: 0;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: #FF6347;
             color: white;
             border: 3px solid #000;
@@ -288,26 +288,33 @@
             cursor: pointer;
             border-radius: 10px;
             box-shadow: 3px 3px 0 #000;
+            z-index: 1001;
         }
 
         .lightbox-nav {
-            position: absolute;
+            position: fixed;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,215,0,0.8);
+            background: rgba(255,215,0,0.9);
             border: 3px solid #000;
-            padding: 20px 15px;
-            font-size: 2em;
+            padding: 15px 12px;
+            font-size: 1.8em;
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 50%;
             font-family: 'Bangers', cursive;
             box-shadow: 3px 3px 0 #000;
             transition: all 0.2s;
+            z-index: 1001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .lightbox-nav:hover {
             background: #FFD700;
-            transform: translateY(-50%) scale(1.1);
+            transform: translateY(-50%) scale(1.15);
         }
 
         .lightbox-prev {
@@ -399,8 +406,10 @@
             }
 
             .lightbox-nav {
-                padding: 12px 8px;
-                font-size: 1.3em;
+                padding: 10px 8px;
+                font-size: 1.4em;
+                width: 45px;
+                height: 45px;
             }
 
             .lightbox-prev {
@@ -498,10 +507,10 @@
 
     <!-- Lightbox -->
     <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+        <button class="lightbox-nav lightbox-prev" onclick="navigateComic(-1)">←</button>
+        <button class="lightbox-nav lightbox-next" onclick="navigateComic(1)">→</button>
         <div class="lightbox-content">
-            <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
-            <button class="lightbox-nav lightbox-prev" onclick="navigateComic(-1)">←</button>
-            <button class="lightbox-nav lightbox-next" onclick="navigateComic(1)">→</button>
             <img id="lightboxImg" src="" alt="Comic">
         </div>
     </div>
