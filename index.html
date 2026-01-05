@@ -590,34 +590,37 @@
         let currentComics = [];
         let currentComicIndex = 0;
 
-        // View tracking system
-        const VIEW_STORAGE_KEY = 'danComicsViews';
-
-        function getViewCounts() {
-            const stored = localStorage.getItem(VIEW_STORAGE_KEY);
-            return stored ? JSON.parse(stored) : {};
-        }
-
-        function saveViewCounts(views) {
-            localStorage.setItem(VIEW_STORAGE_KEY, JSON.stringify(views));
-        }
+        // Global view tracking system using CountAPI
+        const COUNTER_NAMESPACE = 'dan-comics-github-io';
+        const COUNTER_API_BASE = 'https://api.countapi.xyz';
 
         function getComicKey(series, title) {
-            return `${series}_${title}`.replace(/[^a-zA-Z0-9]/g, '_');
+            // Create a unique key for each comic
+            return `${series}_${title}`.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
         }
 
-        function incrementView(series, title) {
-            const views = getViewCounts();
+        async function getViewCount(series, title) {
             const key = getComicKey(series, title);
-            views[key] = (views[key] || 0) + 1;
-            saveViewCounts(views);
-            return views[key];
+            try {
+                const response = await fetch(`${COUNTER_API_BASE}/get/${COUNTER_NAMESPACE}/${key}`);
+                const data = await response.json();
+                return data.value || 0;
+            } catch (error) {
+                console.error('Error fetching view count:', error);
+                return 0;
+            }
         }
 
-        function getViewCount(series, title) {
-            const views = getViewCounts();
+        async function incrementView(series, title) {
             const key = getComicKey(series, title);
-            return views[key] || 0;
+            try {
+                const response = await fetch(`${COUNTER_API_BASE}/hit/${COUNTER_NAMESPACE}/${key}`);
+                const data = await response.json();
+                return data.value || 1;
+            } catch (error) {
+                console.error('Error incrementing view count:', error);
+                return 1;
+            }
         }
 
         // Initialize the page
@@ -686,17 +689,24 @@
                 titleDiv.className = 'comic-title';
                 titleDiv.textContent = comic.title;
 
-                // Add view counter
+                // Add view counter (loading state initially)
                 const viewsDiv = document.createElement('div');
                 viewsDiv.className = 'comic-views';
                 viewsDiv.id = `views-${index}`;
-                const viewCount = getViewCount(currentSeries.name, comic.title);
-                viewsDiv.textContent = `${viewCount} views`;
+                viewsDiv.textContent = 'Loading...';
 
                 card.appendChild(img);
                 card.appendChild(titleDiv);
                 card.appendChild(viewsDiv);
                 comicsList.appendChild(card);
+
+                // Load view count asynchronously
+                getViewCount(currentSeries.name, comic.title).then(viewCount => {
+                    viewsDiv.textContent = `${viewCount} views`;
+                }).catch(err => {
+                    console.error('Error loading view count:', err);
+                    viewsDiv.textContent = '0 views';
+                });
             });
         }
 
@@ -789,14 +799,16 @@
             currentComicIndex = index;
             const comic = currentComics[index];
 
-            // Increment view count
-            const newViewCount = incrementView(currentSeries.name, comic.title);
-
-            // Update the view counter display on the card
-            const viewsElement = document.getElementById(`views-${index}`);
-            if (viewsElement) {
-                viewsElement.textContent = `${newViewCount} views`;
-            }
+            // Increment view count (async)
+            incrementView(currentSeries.name, comic.title).then(newViewCount => {
+                // Update the view counter display on the card
+                const viewsElement = document.getElementById(`views-${index}`);
+                if (viewsElement) {
+                    viewsElement.textContent = `${newViewCount} views`;
+                }
+            }).catch(err => {
+                console.error('Error incrementing view count:', err);
+            });
 
             document.getElementById('lightboxImg').src = comic.path;
             document.getElementById('lightbox').classList.add('active');
