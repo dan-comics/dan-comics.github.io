@@ -194,6 +194,24 @@
             font-size: 1.1em;
         }
 
+        .comic-views {
+            padding: 8px 15px;
+            background: #FFD700;
+            text-align: center;
+            font-size: 0.9em;
+            color: #333;
+            border-top: 2px solid #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .comic-views::before {
+            content: "👁️";
+            font-size: 1.1em;
+        }
+
         .about-section {
             background: white;
             border: 5px solid #000;
@@ -572,6 +590,36 @@
         let currentComics = [];
         let currentComicIndex = 0;
 
+        // View tracking system
+        const VIEW_STORAGE_KEY = 'danComicsViews';
+
+        function getViewCounts() {
+            const stored = localStorage.getItem(VIEW_STORAGE_KEY);
+            return stored ? JSON.parse(stored) : {};
+        }
+
+        function saveViewCounts(views) {
+            localStorage.setItem(VIEW_STORAGE_KEY, JSON.stringify(views));
+        }
+
+        function getComicKey(series, title) {
+            return `${series}_${title}`.replace(/[^a-zA-Z0-9]/g, '_');
+        }
+
+        function incrementView(series, title) {
+            const views = getViewCounts();
+            const key = getComicKey(series, title);
+            views[key] = (views[key] || 0) + 1;
+            saveViewCounts(views);
+            return views[key];
+        }
+
+        function getViewCount(series, title) {
+            const views = getViewCounts();
+            const key = getComicKey(series, title);
+            return views[key] || 0;
+        }
+
         // Initialize the page
         function init() {
             loadSeries();
@@ -630,25 +678,24 @@
                 img.src = comic.path;
                 img.alt = comic.title;
                 img.loading = 'lazy';
-
-                // Debug: log the image path
-                console.log('Loading image:', comic.path);
-
                 img.onerror = function() {
-                    console.error('Failed to load:', comic.path);
                     this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="350"%3E%3Crect fill="%23ddd" width="300" height="350"/%3E%3Ctext x="50%25" y="50%25" font-size="20" text-anchor="middle" fill="%23666"%3EImage not found%3C/text%3E%3C/svg%3E';
-                };
-
-                img.onload = function() {
-                    console.log('Successfully loaded:', comic.path);
                 };
 
                 const titleDiv = document.createElement('div');
                 titleDiv.className = 'comic-title';
                 titleDiv.textContent = comic.title;
 
+                // Add view counter
+                const viewsDiv = document.createElement('div');
+                viewsDiv.className = 'comic-views';
+                viewsDiv.id = `views-${index}`;
+                const viewCount = getViewCount(currentSeries.name, comic.title);
+                viewsDiv.textContent = `${viewCount} views`;
+
                 card.appendChild(img);
                 card.appendChild(titleDiv);
+                card.appendChild(viewsDiv);
                 comicsList.appendChild(card);
             });
         }
@@ -725,7 +772,7 @@
             const files = comicsData[folder] || [];
             return files.map(file => ({
                 title: file.replace('.jpeg', '').replace('.jpg', '').replace('.png', ''),
-                path: 'Website/' + folder.replace(/ /g, '%20') + '/' + file.replace(/ /g, '%20')
+                path: 'Website/' + encodeURIComponent(folder) + '/' + encodeURIComponent(file)
             }));
         }
 
@@ -741,6 +788,16 @@
         function openLightbox(index) {
             currentComicIndex = index;
             const comic = currentComics[index];
+
+            // Increment view count
+            const newViewCount = incrementView(currentSeries.name, comic.title);
+
+            // Update the view counter display on the card
+            const viewsElement = document.getElementById(`views-${index}`);
+            if (viewsElement) {
+                viewsElement.textContent = `${newViewCount} views`;
+            }
+
             document.getElementById('lightboxImg').src = comic.path;
             document.getElementById('lightbox').classList.add('active');
             document.body.style.overflow = 'hidden';
