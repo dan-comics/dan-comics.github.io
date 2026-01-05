@@ -621,8 +621,17 @@
                 img.src = comic.path;
                 img.alt = comic.title;
                 img.loading = 'lazy';
+
+                // Debug: log the image path
+                console.log('Loading image:', comic.path);
+
                 img.onerror = function() {
+                    console.error('Failed to load:', comic.path);
                     this.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="350"%3E%3Crect fill="%23ddd" width="300" height="350"/%3E%3Ctext x="50%25" y="50%25" font-size="20" text-anchor="middle" fill="%23666"%3EImage not found%3C/text%3E%3C/svg%3E';
+                };
+
+                img.onload = function() {
+                    console.log('Successfully loaded:', comic.path);
                 };
 
                 const titleDiv = document.createElement('div');
@@ -707,7 +716,7 @@
             const files = comicsData[folder] || [];
             return files.map(file => ({
                 title: file.replace('.jpeg', '').replace('.jpg', '').replace('.png', ''),
-                path: 'Website/' + encodeURIComponent(folder) + '/' + encodeURIComponent(file)
+                path: 'Website/' + folder.replace(/ /g, '%20') + '/' + file.replace(/ /g, '%20')
             }));
         }
 
