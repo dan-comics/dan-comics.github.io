@@ -697,6 +697,19 @@
                 return;
             }
 
+            // Check if we're already viewing this exact page (avoid double-loading)
+            if (currentSeries && nameToSlug(currentSeries.name) === seriesSlug) {
+                if (subFolderSlug) {
+                    if (currentSubFolder && nameToSlug(currentSubFolder.name) === subFolderSlug) {
+                        console.log('Already on this page, skipping reload');
+                        return; // Already here
+                    }
+                } else if (!currentSubFolder || currentSeries.subFolders.length === 0) {
+                    console.log('Already on this series, skipping reload');
+                    return; // Already here
+                }
+            }
+
             console.log('Found series:', series.name); // Debug log
 
             // Open the series
@@ -886,8 +899,11 @@
 
         // Open a series
         async function openSeries(series) {
-            // Update URL
+            // Update URL (this will trigger hashchange, but we load immediately too)
             window.location.hash = `#/${nameToSlug(series.name)}`;
+
+            // Load immediately (don't wait for hashchange)
+            await openSeriesFromRoute(series, null);
         }
 
         // Load a subfolder from route (without triggering URL update)
@@ -930,6 +946,9 @@
                 // Update URL
                 window.location.hash = `#/${nameToSlug(currentSeries.name)}/${nameToSlug(subFolder.name)}`;
             }
+
+            // Load immediately
+            await loadSubFolderFromRoute(subFolder);
         }
 
         // Load comics for a folder path
