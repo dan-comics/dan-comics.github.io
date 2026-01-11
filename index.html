@@ -666,7 +666,11 @@
 
         // Convert series/folder name to URL slug
         function nameToSlug(name) {
-            return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+            return name.toLowerCase()
+                .replace(/\s+/g, '-')           // Replace spaces with dashes
+                .replace(/[^a-z0-9-]/g, '')     // Remove non-alphanumeric (keep dashes)
+                .replace(/-+/g, '-')            // Collapse multiple dashes to single dash
+                .replace(/^-|-$/g, '');         // Remove leading/trailing dashes
         }
 
         // Convert URL slug back to name
