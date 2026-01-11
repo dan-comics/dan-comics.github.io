@@ -1,0 +1,610 @@
+{
+  "generated": "2026-01-10T19:56:21.871401",
+  "version": "1.0",
+  "series": [
+    {
+      "name": "Cheez Dame",
+      "folder": "Cheez Dame",
+      "subFolders": [],
+      "comics": [
+        {
+          "name": "Cheez Math.jpeg",
+          "path": "Website/Cheez Dame/Cheez Math.jpeg",
+          "isPdf": false,
+          "size": 3488914,
+          "modified": "2026-01-03T20:15:42.472598"
+        },
+        {
+          "name": "Condiment Cooper's Big Fight.jpeg",
+          "path": "Website/Cheez Dame/Condiment Cooper's Big Fight.jpeg",
+          "isPdf": false,
+          "size": 4116322,
+          "modified": "2026-01-03T21:06:39.504389"
+        },
+        {
+          "name": "Dame's Big Fight.jpeg",
+          "path": "Website/Cheez Dame/Dame's Big Fight.jpeg",
+          "isPdf": false,
+          "size": 3795337,
+          "modified": "2026-01-03T21:06:46.976382"
+        },
+        {
+          "name": "Fire Dame.jpeg",
+          "path": "Website/Cheez Dame/Fire Dame.jpeg",
+          "isPdf": false,
+          "size": 3889890,
+          "modified": "2026-01-03T20:15:42.217350"
+        },
+        {
+          "name": "Mega Millie.jpeg",
+          "path": "Website/Cheez Dame/Mega Millie.jpeg",
+          "isPdf": false,
+          "size": 3408554,
+          "modified": "2026-01-03T21:06:52.969032"
+        },
+        {
+          "name": "Milk Noah Part 1.jpeg",
+          "path": "Website/Cheez Dame/Milk Noah Part 1.jpeg",
+          "isPdf": false,
+          "size": 4119251,
+          "modified": "2026-01-03T20:15:41.705143"
+        },
+        {
+          "name": "Milk Noah Part 2.jpeg",
+          "path": "Website/Cheez Dame/Milk Noah Part 2.jpeg",
+          "isPdf": false,
+          "size": 4324534,
+          "modified": "2026-01-03T20:15:41.468259"
+        },
+        {
+          "name": "Milk Noah's Big Fight.jpeg",
+          "path": "Website/Cheez Dame/Milk Noah's Big Fight.jpeg",
+          "isPdf": false,
+          "size": 4207643,
+          "modified": "2026-01-03T20:15:42.777368"
+        },
+        {
+          "name": "Super Cheez Dame .jpeg",
+          "path": "Website/Cheez Dame/Super Cheez Dame .jpeg",
+          "isPdf": false,
+          "size": 3677809,
+          "modified": "2026-01-03T20:15:42.718825"
+        },
+        {
+          "name": "The Cheez Blaster.jpeg",
+          "path": "Website/Cheez Dame/The Cheez Blaster.jpeg",
+          "isPdf": false,
+          "size": 3295723,
+          "modified": "2026-01-03T20:15:41.303439"
+        },
+        {
+          "name": "The Cheez World.jpeg",
+          "path": "Website/Cheez Dame/The Cheez World.jpeg",
+          "isPdf": false,
+          "size": 3997214,
+          "modified": "2026-01-03T21:07:02.114546"
+        },
+        {
+          "name": "The Disease World.jpeg",
+          "path": "Website/Cheez Dame/The Disease World.jpeg",
+          "isPdf": false,
+          "size": 3839077,
+          "modified": "2026-01-03T21:07:04.850576"
+        },
+        {
+          "name": "The Shiny Cheez.jpeg",
+          "path": "Website/Cheez Dame/The Shiny Cheez.jpeg",
+          "isPdf": false,
+          "size": 3526091,
+          "modified": "2026-01-03T21:07:08.175516"
+        }
+      ]
+    },
+    {
+      "name": "Dan Character",
+      "folder": "Dan Character",
+      "subFolders": [],
+      "comics": [
+        {
+          "name": "Dan.pdf",
+          "path": "Website/Dan Character/Dan.pdf",
+          "isPdf": true,
+          "size": 1002942,
+          "modified": "2026-01-04T19:24:38.678461"
+        },
+        {
+          "name": "Emmy.pdf",
+          "path": "Website/Dan Character/Emmy.pdf",
+          "isPdf": true,
+          "size": 230579,
+          "modified": "2026-01-04T19:24:50.068167"
+        },
+        {
+          "name": "Everybody Else 1.pdf",
+          "path": "Website/Dan Character/Everybody Else 1.pdf",
+          "isPdf": true,
+          "size": 573222,
+          "modified": "2026-01-04T19:25:00.291167"
+        },
+        {
+          "name": "Everybody Else 2.pdf",
+          "path": "Website/Dan Character/Everybody Else 2.pdf",
+          "isPdf": true,
+          "size": 514265,
+          "modified": "2026-01-04T19:25:02.445054"
+        },
+        {
+          "name": "Granny.pdf",
+          "path": "Website/Dan Character/Granny.pdf",
+          "isPdf": true,
+          "size": 222238,
+          "modified": "2026-01-04T19:24:45.506477"
+        },
+        {
+          "name": "King Charles.pdf",
+          "path": "Website/Dan Character/King Charles.pdf",
+          "isPdf": true,
+          "size": 200535,
+          "modified": "2026-01-04T19:24:57.164584"
+        },
+        {
+          "name": "Nathan.pdf",
+          "path": "Website/Dan Character/Nathan.pdf",
+          "isPdf": true,
+          "size": 248007,
+          "modified": "2026-01-04T19:24:53.881098"
+        }
+      ]
+    },
+    {
+      "name": "Dan Funnies",
+      "folder": "Dan Funnies",
+      "subFolders": [],
+      "comics": [
+        {
+          "name": "A Plane Crash.jpeg",
+          "path": "Website/Dan Funnies/A Plane Crash.jpeg",
+          "isPdf": false,
+          "size": 3301933,
+          "modified": "2026-01-03T20:15:40.218642"
+        },
+        {
+          "name": "Breakfast Cereal.jpeg",
+          "path": "Website/Dan Funnies/Breakfast Cereal.jpeg",
+          "isPdf": false,
+          "size": 4367107,
+          "modified": "2026-01-03T20:15:39.716705"
+        },
+        {
+          "name": "Dan Craves Mc Dono.jpeg",
+          "path": "Website/Dan Funnies/Dan Craves Mc Dono.jpeg",
+          "isPdf": false,
+          "size": 3573899,
+          "modified": "2026-01-03T21:07:43.372982"
+        },
+        {
+          "name": "Dan's Diet.jpeg",
+          "path": "Website/Dan Funnies/Dan's Diet.jpeg",
+          "isPdf": false,
+          "size": 3403190,
+          "modified": "2026-01-03T21:07:45.859424"
+        },
+        {
+          "name": "Egg Tossing.jpeg",
+          "path": "Website/Dan Funnies/Egg Tossing.jpeg",
+          "isPdf": false,
+          "size": 3858132,
+          "modified": "2026-01-03T20:15:44.105833"
+        },
+        {
+          "name": "Helicopter.jpeg",
+          "path": "Website/Dan Funnies/Helicopter.jpeg",
+          "isPdf": false,
+          "size": 3961339,
+          "modified": "2026-01-03T20:15:39.662005"
+        },
+        {
+          "name": "Mount Vesuvius.jpeg",
+          "path": "Website/Dan Funnies/Mount Vesuvius.jpeg",
+          "isPdf": false,
+          "size": 3103660,
+          "modified": "2026-01-03T20:15:40.163001"
+        },
+        {
+          "name": "The Email.jpeg",
+          "path": "Website/Dan Funnies/The Email.jpeg",
+          "isPdf": false,
+          "size": 3278411,
+          "modified": "2026-01-03T20:15:40.729771"
+        },
+        {
+          "name": "The Gas Truck.jpeg",
+          "path": "Website/Dan Funnies/The Gas Truck.jpeg",
+          "isPdf": false,
+          "size": 3383616,
+          "modified": "2026-01-03T21:07:51.006098"
+        },
+        {
+          "name": "The Mummy.jpeg",
+          "path": "Website/Dan Funnies/The Mummy.jpeg",
+          "isPdf": false,
+          "size": 3525372,
+          "modified": "2026-01-03T20:15:40.107501"
+        },
+        {
+          "name": "The Toothpaste Ad .jpeg",
+          "path": "Website/Dan Funnies/The Toothpaste Ad .jpeg",
+          "isPdf": false,
+          "size": 3177070,
+          "modified": "2026-01-03T20:15:40.656985"
+        },
+        {
+          "name": "Trader Joe's.jpeg",
+          "path": "Website/Dan Funnies/Trader Joe's.jpeg",
+          "isPdf": false,
+          "size": 3809681,
+          "modified": "2026-01-03T20:15:39.834692"
+        }
+      ]
+    },
+    {
+      "name": "Dan Ice cream",
+      "folder": "Dan Ice cream",
+      "subFolders": [],
+      "comics": [
+        {
+          "name": "Mom's Ice Cream.jpeg",
+          "path": "Website/Dan Ice cream/Mom's Ice Cream.jpeg",
+          "isPdf": false,
+          "size": 3071362,
+          "modified": "2026-01-03T21:07:59.290612"
+        },
+        {
+          "name": "The Foam Pit.jpeg",
+          "path": "Website/Dan Ice cream/The Foam Pit.jpeg",
+          "isPdf": false,
+          "size": 3226309,
+          "modified": "2026-01-03T20:15:40.903180"
+        }
+      ]
+    },
+    {
+      "name": "Dan Music",
+      "folder": "Dan Music",
+      "subFolders": [],
+      "comics": [
+        {
+          "name": "The Conductor.jpeg",
+          "path": "Website/Dan Music/The Conductor.jpeg",
+          "isPdf": false,
+          "size": 3499133,
+          "modified": "2026-01-03T20:15:39.542915"
+        },
+        {
+          "name": "The Recorder Plug.jpeg",
+          "path": "Website/Dan Music/The Recorder Plug.jpeg",
+          "isPdf": false,
+          "size": 3342538,
+          "modified": "2026-01-03T20:15:42.997507"
+        }
+      ]
+    },
+    {
+      "name": "Dan Science",
+      "folder": "Dan Science",
+      "subFolders": [],
+      "comics": []
+    },
+    {
+      "name": "Dan Shorts",
+      "folder": "Dan Shorts",
+      "subFolders": [],
+      "comics": [
+        {
+          "name": "Jeff Excersises.jpeg",
+          "path": "Website/Dan Shorts/Jeff Excersises.jpeg",
+          "isPdf": false,
+          "size": 3282343,
+          "modified": "2026-01-03T20:15:40.845713"
+        },
+        {
+          "name": "NNN Upgrades.jpeg",
+          "path": "Website/Dan Shorts/NNN Upgrades.jpeg",
+          "isPdf": false,
+          "size": 3289231,
+          "modified": "2026-01-03T21:08:09.558683"
+        }
+      ]
+    },
+    {
+      "name": "FLL - Band of Bots",
+      "folder": "FLL - Band of Bots",
+      "subFolders": [
+        {
+          "name": "Dan Comics - Band of Bots",
+          "path": "FLL - Band of Bots/Dan Comics - Band of Bots",
+          "comics": [
+            {
+              "name": "BoB.jpeg",
+              "path": "Website/FLL - Band of Bots/Dan Comics - Band of Bots/BoB.jpeg",
+              "isPdf": false,
+              "size": 5104725,
+              "modified": "2026-01-10T17:24:30.543964"
+            }
+          ]
+        },
+        {
+          "name": "Team Fun",
+          "path": "FLL - Band of Bots/Team Fun",
+          "comics": [
+            {
+              "name": "Archaeological Center 2.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Archaeological Center 2.jpeg",
+              "isPdf": false,
+              "size": 5287104,
+              "modified": "2026-01-10T16:08:02.855287"
+            },
+            {
+              "name": "Archaeological Center.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Archaeological Center.jpeg",
+              "isPdf": false,
+              "size": 5147052,
+              "modified": "2026-01-10T16:06:14.628963"
+            },
+            {
+              "name": "Barona Cultural Center.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Barona Cultural Center.jpeg",
+              "isPdf": false,
+              "size": 5025802,
+              "modified": "2026-01-10T16:57:15.040437"
+            },
+            {
+              "name": "Birthday.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Birthday.jpeg",
+              "isPdf": false,
+              "size": 11317475,
+              "modified": "2025-09-15T11:22:42.715850"
+            },
+            {
+              "name": "Food Time.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Food Time.jpeg",
+              "isPdf": false,
+              "size": 5442555,
+              "modified": "2026-01-10T16:58:56.669349"
+            },
+            {
+              "name": "School Open House.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/School Open House.jpeg",
+              "isPdf": false,
+              "size": 1913921,
+              "modified": "2026-01-10T16:06:53.242185"
+            },
+            {
+              "name": "Team 1.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Team 1.jpeg",
+              "isPdf": false,
+              "size": 2462198,
+              "modified": "2026-01-10T16:07:06.754807"
+            },
+            {
+              "name": "Team 2.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Team 2.jpeg",
+              "isPdf": false,
+              "size": 4119620,
+              "modified": "2026-01-10T16:08:46.599326"
+            },
+            {
+              "name": "Team 3.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Team 3.jpeg",
+              "isPdf": false,
+              "size": 5172735,
+              "modified": "2026-01-10T16:07:47.315180"
+            },
+            {
+              "name": "Team 4.jpeg",
+              "path": "Website/FLL - Band of Bots/Team Fun/Team 4.jpeg",
+              "isPdf": false,
+              "size": 5650051,
+              "modified": "2026-01-10T16:08:39.508927"
+            },
+            {
+              "name": "Team 5.JPG",
+              "path": "Website/FLL - Band of Bots/Team Fun/Team 5.JPG",
+              "isPdf": false,
+              "size": 1690143,
+              "modified": "2026-01-10T16:26:37.495111"
+            },
+            {
+              "name": "Team 6.heic",
+              "path": "Website/FLL - Band of Bots/Team Fun/Team 6.heic",
+              "isPdf": false,
+              "size": 1958928,
+              "modified": "2026-01-10T16:53:13.996243"
+            }
+          ]
+        },
+        {
+          "name": "The Airlock IP",
+          "path": "FLL - Band of Bots/The Airlock IP",
+          "comics": [
+            {
+              "name": "Double Layered Preservation And Protection System.pdf",
+              "path": "Website/FLL - Band of Bots/The Airlock IP/Double Layered Preservation And Protection System.pdf",
+              "isPdf": true,
+              "size": 759837,
+              "modified": "2025-12-01T21:23:55.588020"
+            }
+          ]
+        },
+        {
+          "name": "The Band",
+          "path": "FLL - Band of Bots/The Band",
+          "comics": [
+            {
+              "name": "Band Rock.jpg",
+              "path": "Website/FLL - Band of Bots/The Band/Band Rock.jpg",
+              "isPdf": false,
+              "size": 3845088,
+              "modified": "2026-01-10T17:17:00.771270"
+            },
+            {
+              "name": "Merry Christmas 2.jpg",
+              "path": "Website/FLL - Band of Bots/The Band/Merry Christmas 2.jpg",
+              "isPdf": false,
+              "size": 4004977,
+              "modified": "2026-01-10T16:59:48.541727"
+            },
+            {
+              "name": "Merry Christmas.jpg",
+              "path": "Website/FLL - Band of Bots/The Band/Merry Christmas.jpg",
+              "isPdf": false,
+              "size": 1731914,
+              "modified": "2026-01-10T17:00:05.074671"
+            }
+          ]
+        }
+      ],
+      "comics": []
+    },
+    {
+      "name": "More Series Here",
+      "folder": "More Series Here",
+      "subFolders": [],
+      "comics": [
+        {
+          "name": "Dan Biscoff.jpeg",
+          "path": "Website/More Series Here/Dan Biscoff.jpeg",
+          "isPdf": false,
+          "size": 3447206,
+          "modified": "2026-01-03T20:15:39.772665"
+        },
+        {
+          "name": "Dan Shrinks To An Atom.jpeg",
+          "path": "Website/More Series Here/Dan Shrinks To An Atom.jpeg",
+          "isPdf": false,
+          "size": 3677394,
+          "modified": "2026-01-03T20:15:40.785478"
+        },
+        {
+          "name": "Dan Spinning.jpeg",
+          "path": "Website/More Series Here/Dan Spinning.jpeg",
+          "isPdf": false,
+          "size": 3564458,
+          "modified": "2026-01-03T20:15:41.194815"
+        },
+        {
+          "name": "Danime.jpeg",
+          "path": "Website/More Series Here/Danime.jpeg",
+          "isPdf": false,
+          "size": 3408620,
+          "modified": "2026-01-03T21:08:17.203209"
+        },
+        {
+          "name": "Giant Mutated Zombie With A Mile Long Sword Vs Nathan.jpeg",
+          "path": "Website/More Series Here/Giant Mutated Zombie With A Mile Long Sword Vs Nathan.jpeg",
+          "isPdf": false,
+          "size": 3736477,
+          "modified": "2026-01-03T21:08:19.951940"
+        },
+        {
+          "name": "House Battle.jpeg",
+          "path": "Website/More Series Here/House Battle.jpeg",
+          "isPdf": false,
+          "size": 3224509,
+          "modified": "2026-01-03T21:08:22.966231"
+        },
+        {
+          "name": "I Want Candy Cane.jpeg",
+          "path": "Website/More Series Here/I Want Candy Cane.jpeg",
+          "isPdf": false,
+          "size": 4449325,
+          "modified": "2026-01-03T21:08:25.622798"
+        },
+        {
+          "name": "Kung Fu.jpeg",
+          "path": "Website/More Series Here/Kung Fu.jpeg",
+          "isPdf": false,
+          "size": 3308826,
+          "modified": "2026-01-03T20:15:40.025804"
+        },
+        {
+          "name": "Nathan Joins The Cool Crew.jpeg",
+          "path": "Website/More Series Here/Nathan Joins The Cool Crew.jpeg",
+          "isPdf": false,
+          "size": 3130995,
+          "modified": "2026-01-03T20:15:42.833117"
+        },
+        {
+          "name": "Outlogicked.jpeg",
+          "path": "Website/More Series Here/Outlogicked.jpeg",
+          "isPdf": false,
+          "size": 3368521,
+          "modified": "2026-01-03T20:15:42.889663"
+        },
+        {
+          "name": "Tapu Koko Blasts Dan.jpeg",
+          "path": "Website/More Series Here/Tapu Koko Blasts Dan.jpeg",
+          "isPdf": false,
+          "size": 3992561,
+          "modified": "2026-01-03T21:08:31.408398"
+        },
+        {
+          "name": "The YMCA Party.jpeg",
+          "path": "Website/More Series Here/The YMCA Party.jpeg",
+          "isPdf": false,
+          "size": 3188379,
+          "modified": "2026-01-03T20:15:40.958019"
+        }
+      ]
+    },
+    {
+      "name": "Origional Dan",
+      "folder": "Origional Dan",
+      "subFolders": [],
+      "comics": [
+        {
+          "name": "1st Dan Comic ever!!!!!.jpeg",
+          "path": "Website/Origional Dan/1st Dan Comic ever!!!!!.jpeg",
+          "isPdf": false,
+          "size": 3315965,
+          "modified": "2026-01-03T21:08:41.207942"
+        },
+        {
+          "name": "Butt Man.jpeg",
+          "path": "Website/Origional Dan/Butt Man.jpeg",
+          "isPdf": false,
+          "size": 3207890,
+          "modified": "2026-01-03T21:08:44.029444"
+        },
+        {
+          "name": "Intro to Dan!.jpeg",
+          "path": "Website/Origional Dan/Intro to Dan!.jpeg",
+          "isPdf": false,
+          "size": 3920153,
+          "modified": "2026-01-03T20:15:39.366371"
+        },
+        {
+          "name": "NNN's Hard Mission.jpeg",
+          "path": "Website/Origional Dan/NNN's Hard Mission.jpeg",
+          "isPdf": false,
+          "size": 3136104,
+          "modified": "2026-01-03T21:08:46.522671"
+        },
+        {
+          "name": "The Quest.jpeg",
+          "path": "Website/Origional Dan/The Quest.jpeg",
+          "isPdf": false,
+          "size": 3436150,
+          "modified": "2026-01-03T20:15:39.962599"
+        },
+        {
+          "name": "Weightlift Like CRAZY!!!!!.jpeg",
+          "path": "Website/Origional Dan/Weightlift Like CRAZY!!!!!.jpeg",
+          "isPdf": false,
+          "size": 3902349,
+          "modified": "2026-01-03T20:15:40.366841"
+        }
+      ]
+    }
+  ]
+}
