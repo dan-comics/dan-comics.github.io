@@ -821,7 +821,7 @@
                         });
                     }
 
-                    return {
+                    const series = {
                         name: seriesData.name,
                         folder: seriesData.folder,
                         color: config.color,
@@ -829,6 +829,11 @@
                         subFolders: subFolders,
                         comics: seriesData.comics || []
                     };
+
+                    // Debug: Log the slug for this series
+                    console.log(`Series: "${series.name}" → slug: "${nameToSlug(series.name)}"`);
+
+                    return series;
                 });
 
                 console.log('Loaded series from manifest:', comicSeries);
