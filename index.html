@@ -17,24 +17,6 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
-            transition: background 0.5s ease;
-        }
-
-        body.custom-bg {
-            background: url('Website/FLL - Band of Bots/Background.JPG') center center;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        body.custom-bg::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.3);
-            z-index: -1;
         }
 
         .header {
@@ -651,16 +633,16 @@
 
         // Series configuration with icons and colors
         const seriesConfig = {
-            'Origional Dan': { icon: '⭐', color: '#FF6B6B', background: null },
-            'Dan Funnies': { icon: '😂', color: '#4ECDC4', background: null },
-            'Cheez Dame': { icon: '🧀', color: '#FFD93D', background: null },
-            'Dan Music': { icon: '🎵', color: '#95E1D3', background: null },
-            'Dan Ice cream': { icon: '🍦', color: '#F38181', background: null },
-            'Dan Shorts': { icon: '🎬', color: '#AA96DA', background: null },
-            'Dan Science': { icon: '🔬', color: '#FCBAD3', background: null },
-            'Dan Character': { icon: '👥', color: '#FFA07A', background: null },
-            'FLL - Band of Bots': { icon: '🤖', color: '#5C6BC0', background: 'Website/FLL - Band of Bots/Background.JPG' },
-            'More Series Here': { icon: '✨', color: '#A8E6CF', background: null }
+            'Origional Dan': { icon: '⭐', color: '#FF6B6B' },
+            'Dan Funnies': { icon: '😂', color: '#4ECDC4' },
+            'Cheez Dame': { icon: '🧀', color: '#FFD93D' },
+            'Dan Music': { icon: '🎵', color: '#95E1D3' },
+            'Dan Ice cream': { icon: '🍦', color: '#F38181' },
+            'Dan Shorts': { icon: '🎬', color: '#AA96DA' },
+            'Dan Science': { icon: '🔬', color: '#FCBAD3' },
+            'Dan Character': { icon: '👥', color: '#FFA07A' },
+            'FLL - Band of Bots': { icon: '🤖', color: '#5C6BC0' },
+            'More Series Here': { icon: '✨', color: '#A8E6CF' }
         };
 
         // Initialize the page
@@ -689,8 +671,7 @@
                     const folderName = folder.name;
                     const config = seriesConfig[folderName] || {
                         icon: '📚',
-                        color: getRandomColor(),
-                        background: null
+                        color: getRandomColor()
                     };
 
                     // Check for subfolders
@@ -701,7 +682,6 @@
                         folder: folderName,
                         color: config.color,
                         icon: config.icon,
-                        background: config.background,
                         subFolders: subFolders
                     };
                 }));
@@ -737,20 +717,20 @@
         // Fallback series if GitHub API fails
         function loadFallbackSeries() {
             comicSeries = [
-                { name: "Origional Dan", folder: "Origional Dan", color: "#FF6B6B", icon: "⭐", background: null, subFolders: [] },
-                { name: "Dan Funnies", folder: "Dan Funnies", color: "#4ECDC4", icon: "😂", background: null, subFolders: [] },
-                { name: "Cheez Dame", folder: "Cheez Dame", color: "#FFD93D", icon: "🧀", background: null, subFolders: [] },
-                { name: "Dan Music", folder: "Dan Music", color: "#95E1D3", icon: "🎵", background: null, subFolders: [] },
-                { name: "Dan Ice cream", folder: "Dan Ice cream", color: "#F38181", icon: "🍦", background: null, subFolders: [] },
-                { name: "Dan Shorts", folder: "Dan Shorts", color: "#AA96DA", icon: "🎬", background: null, subFolders: [] },
-                { name: "Dan Science", folder: "Dan Science", color: "#FCBAD3", icon: "🔬", background: null, subFolders: [] },
-                { name: "Dan Character", folder: "Dan Character", color: "#FFA07A", icon: "👥", background: null, subFolders: [] },
-                { name: "FLL - Band of Bots", folder: "FLL - Band of Bots", color: "#5C6BC0", icon: "🤖", background: "Website/FLL - Band of Bots/Background.JPG", subFolders: [
+                { name: "Origional Dan", folder: "Origional Dan", color: "#FF6B6B", icon: "⭐", subFolders: [] },
+                { name: "Dan Funnies", folder: "Dan Funnies", color: "#4ECDC4", icon: "😂", subFolders: [] },
+                { name: "Cheez Dame", folder: "Cheez Dame", color: "#FFD93D", icon: "🧀", subFolders: [] },
+                { name: "Dan Music", folder: "Dan Music", color: "#95E1D3", icon: "🎵", subFolders: [] },
+                { name: "Dan Ice cream", folder: "Dan Ice cream", color: "#F38181", icon: "🍦", subFolders: [] },
+                { name: "Dan Shorts", folder: "Dan Shorts", color: "#AA96DA", icon: "🎬", subFolders: [] },
+                { name: "Dan Science", folder: "Dan Science", color: "#FCBAD3", icon: "🔬", subFolders: [] },
+                { name: "Dan Character", folder: "Dan Character", color: "#FFA07A", icon: "👥", subFolders: [] },
+                { name: "FLL - Band of Bots", folder: "FLL - Band of Bots", color: "#5C6BC0", icon: "🤖", subFolders: [
                     { name: "Team Fun", path: "FLL - Band of Bots/Team Fun" },
                     { name: "The Airlock IP", path: "FLL - Band of Bots/The Airlock IP" },
                     { name: "The Band", path: "FLL - Band of Bots/The Band" }
                 ]},
-                { name: "More Series Here", folder: "More Series Here", color: "#A8E6CF", icon: "✨", background: null, subFolders: [] }
+                { name: "More Series Here", folder: "More Series Here", color: "#A8E6CF", icon: "✨", subFolders: [] }
             ];
         }
 
@@ -790,15 +770,6 @@
             document.getElementById('seriesView').classList.add('hidden');
             document.getElementById('comicsView').classList.remove('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
-
-            // Apply custom background if exists
-            if (series.background) {
-                document.body.classList.add('custom-bg');
-                document.body.style.backgroundImage = `url('${series.background}')`;
-            } else {
-                document.body.classList.remove('custom-bg');
-                document.body.style.backgroundImage = '';
-            }
 
             // Show/hide sub-tabs
             const subTabContainer = document.getElementById('subTabContainer');
@@ -942,10 +913,6 @@
             document.getElementById('breadcrumb').classList.add('hidden');
             document.getElementById('subTabContainer').classList.add('hidden');
             currentSeries = null;
-
-            // Remove custom background
-            document.body.classList.remove('custom-bg');
-            document.body.style.backgroundImage = '';
         }
 
         // Open lightbox
