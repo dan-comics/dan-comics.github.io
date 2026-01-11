@@ -53,6 +53,7 @@ const seriesConfig = {
 - `.jpeg` / `.jpg`
 - `.png`
 - `.gif`
+- `.heic`
 - `.pdf`
 
 ## ⚙️ How It Works

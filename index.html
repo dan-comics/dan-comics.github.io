@@ -696,7 +696,8 @@
         // Get subfolders for a series
         async function getSubFolders(seriesFolder) {
             try {
-                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website/${encodeURIComponent(seriesFolder)}`;
+                const encodedFolder = encodeURIComponent(seriesFolder);
+                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website/${encodedFolder}`;
                 const response = await fetch(url);
 
                 if (!response.ok) return [];
@@ -704,10 +705,26 @@
                 const items = await response.json();
                 const folders = items.filter(item => item.type === 'dir');
 
-                return folders.map(folder => ({
+                let subFolders = folders.map(folder => ({
                     name: folder.name,
                     path: `${seriesFolder}/${folder.name}`
                 }));
+
+                // Custom ordering for Band of Bots
+                if (seriesFolder === 'FLL - Band of Bots') {
+                    const orderMap = {
+                        'Team Fun': 1,
+                        'The Airlock IP': 2,
+                        'The Band': 3
+                    };
+                    subFolders.sort((a, b) => {
+                        const orderA = orderMap[a.name] || 999;
+                        const orderB = orderMap[b.name] || 999;
+                        return orderA - orderB;
+                    });
+                }
+
+                return subFolders;
             } catch (error) {
                 console.error('Error loading subfolders:', error);
                 return [];
@@ -892,7 +909,11 @@
         // Get comics for a folder path
         async function getComicsForFolder(folderPath) {
             try {
-                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website/${encodeURIComponent(folderPath)}`;
+                // Properly encode the path - encode each part separately to preserve slashes
+                const pathParts = folderPath.split('/').map(part => encodeURIComponent(part));
+                const encodedPath = pathParts.join('/');
+
+                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website/${encodedPath}`;
                 const response = await fetch(url);
 
                 if (!response.ok) {
@@ -903,7 +924,7 @@
                 const items = await response.json();
 
                 // Filter to only image files and PDFs, exclude Background.JPG
-                const imageExtensions = ['.jpeg', '.jpg', '.png', '.gif'];
+                const imageExtensions = ['.jpeg', '.jpg', '.png', '.gif', '.heic'];
                 const validFiles = items.filter(item => {
                     if (item.type !== 'file') return false;
                     if (item.name === 'Background.JPG') return false;
@@ -915,7 +936,7 @@
                 const comics = validFiles.map(file => {
                     const ext = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
                     return {
-                        title: file.name.replace(/\.(jpeg|jpg|png|gif|pdf)$/i, ''),
+                        title: file.name.replace(/\.(jpeg|jpg|png|gif|heic|pdf)$/i, ''),
                         path: `Website/${folderPath}/${file.name}`,
                         isPdf: ext === '.pdf'
                     };
