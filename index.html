@@ -882,9 +882,10 @@
                     // PDF preview
                     const pdfPreview = document.createElement('div');
                     pdfPreview.className = 'pdf-preview';
+                    const pdfMessage = isMobileDevice() ? 'Click to open PDF' : 'Click to view PDF';
                     pdfPreview.innerHTML = `
                         <div class="pdf-icon">📄</div>
-                        <div class="pdf-text">Click to view PDF</div>
+                        <div class="pdf-text">${pdfMessage}</div>
                     `;
                     card.appendChild(pdfPreview);
                 } else {
@@ -973,16 +974,27 @@
             `;
         }
 
+        // Check if device is mobile
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
         // Open lightbox
         function openLightbox(index) {
             currentComicIndex = index;
             const comic = currentComics[index];
 
+            // On mobile devices, open PDFs in a new tab instead of iframe
+            if (comic.isPdf && isMobileDevice()) {
+                window.open(comic.path, '_blank');
+                return;
+            }
+
             const lightboxImg = document.getElementById('lightboxImg');
             const lightboxPdf = document.getElementById('lightboxPdf');
 
             if (comic.isPdf) {
-                // Show PDF
+                // Show PDF in iframe (desktop only)
                 lightboxImg.classList.add('hidden');
                 lightboxPdf.classList.remove('hidden');
                 lightboxPdf.src = comic.path;
@@ -1018,6 +1030,13 @@
             }
 
             const comic = currentComics[currentComicIndex];
+
+            // On mobile, skip PDFs since they open in new tab
+            if (comic.isPdf && isMobileDevice()) {
+                navigateComic(direction); // Skip to next/previous
+                return;
+            }
+
             const lightboxImg = document.getElementById('lightboxImg');
             const lightboxPdf = document.getElementById('lightboxPdf');
 
