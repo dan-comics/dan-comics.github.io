@@ -566,8 +566,8 @@
 </head>
 <body>
     <div class="header">
-        <h1>DAN COMICS</h1>
-        <div class="subtitle">Created by Evan from San Diego</div>
+        <h1 id="headerTitle">DAN COMICS</h1>
+        <div class="subtitle" id="headerSubtitle">Created by Evan from San Diego</div>
     </div>
 
     <div class="nav-breadcrumb hidden" id="breadcrumb">
@@ -591,9 +591,9 @@
             </div>
         </div>
 
-        <div class="about-section">
-            <h2>About Evan</h2>
-            <p>
+        <div class="about-section" id="aboutSection">
+            <h2 id="aboutTitle">About Evan</h2>
+            <p id="aboutText">
                 Meet Evan, an 11-year-old comic artist from San Diego, California!
                 Evan creates hilarious and imaginative adventures featuring Dan and friends.
                 From epic battles to everyday funnies, each comic is bursting with creativity and humor.
@@ -771,6 +771,30 @@
             document.getElementById('comicsView').classList.remove('hidden');
             document.getElementById('breadcrumb').classList.remove('hidden');
 
+            // Update header and about section for Band of Bots
+            if (series.name === 'FLL - Band of Bots') {
+                document.getElementById('headerTitle').textContent = 'BAND OF BOTS';
+                document.getElementById('headerSubtitle').textContent = 'FLL Team 71484 - Where Music Meets Robotics';
+                document.getElementById('aboutTitle').textContent = 'About Band of Bots';
+                document.getElementById('aboutText').innerHTML = `
+                    Meet the Band of Bots, FLL Team 71484! We're a group of talented 5th graders from San Diego who share two passions:
+                    creating music together as a band and building amazing robots. Whether we're jamming on our instruments or
+                    engineering innovative solutions, we work as a team, support each other, and have a blast doing it.
+                    From robotics competitions to rock concerts, we're always learning, creating, and rocking out together!
+                `;
+            } else {
+                // Reset to default Dan Comics branding
+                document.getElementById('headerTitle').textContent = 'DAN COMICS';
+                document.getElementById('headerSubtitle').textContent = 'Created by Evan from San Diego';
+                document.getElementById('aboutTitle').textContent = 'About Evan';
+                document.getElementById('aboutText').innerHTML = `
+                    Meet Evan, an 11-year-old comic artist from San Diego, California!
+                    Evan creates hilarious and imaginative adventures featuring Dan and friends.
+                    From epic battles to everyday funnies, each comic is bursting with creativity and humor.
+                    Dive into the wild world of The Dan Comics and discover what happens when imagination knows no bounds!
+                `;
+            }
+
             // Show/hide sub-tabs
             const subTabContainer = document.getElementById('subTabContainer');
             if (series.subFolders && series.subFolders.length > 0) {
@@ -913,6 +937,17 @@
             document.getElementById('breadcrumb').classList.add('hidden');
             document.getElementById('subTabContainer').classList.add('hidden');
             currentSeries = null;
+
+            // Reset to default Dan Comics branding
+            document.getElementById('headerTitle').textContent = 'DAN COMICS';
+            document.getElementById('headerSubtitle').textContent = 'Created by Evan from San Diego';
+            document.getElementById('aboutTitle').textContent = 'About Evan';
+            document.getElementById('aboutText').innerHTML = `
+                Meet Evan, an 11-year-old comic artist from San Diego, California!
+                Evan creates hilarious and imaginative adventures featuring Dan and friends.
+                From epic battles to everyday funnies, each comic is bursting with creativity and humor.
+                Dive into the wild world of The Dan Comics and discover what happens when imagination knows no bounds!
+            `;
         }
 
         // Open lightbox
