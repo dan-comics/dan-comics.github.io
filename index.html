@@ -650,8 +650,8 @@
             await loadSeriesFromGitHub();
             loadSeries();
 
-            // Handle initial URL
-            handleRouteChange();
+            // Handle initial URL after series are loaded
+            await handleRouteChange();
 
             // Handle browser back/forward buttons
             window.addEventListener('hashchange', handleRouteChange);
@@ -671,10 +671,13 @@
         // Handle route changes from URL
         async function handleRouteChange() {
             const hash = window.location.hash.slice(1); // Remove #
-            if (!hash || hash === '/') {
+
+            console.log('Route change:', hash); // Debug log
+
+            if (!hash || hash === '/' || hash === '') {
                 // Home page - show series grid
                 if (currentSeries) {
-                    goBack();
+                    goBackSilent();
                 }
                 return;
             }
@@ -685,12 +688,16 @@
             const seriesSlug = parts[0];
             const subFolderSlug = parts[1];
 
+            console.log('Looking for series:', seriesSlug, 'in', comicSeries.length, 'series'); // Debug log
+
             // Find the series
             const series = comicSeries.find(s => nameToSlug(s.name) === seriesSlug);
             if (!series) {
-                console.error('Series not found:', seriesSlug);
+                console.error('Series not found:', seriesSlug, 'Available:', comicSeries.map(s => nameToSlug(s.name)));
                 return;
             }
+
+            console.log('Found series:', series.name); // Debug log
 
             // Open the series
             await openSeriesFromRoute(series, subFolderSlug);
@@ -1021,8 +1028,8 @@
             }
         }
 
-        // Go back to series view
-        function goBack() {
+        // Go back to series view (silent - no URL update)
+        function goBackSilent() {
             document.getElementById('seriesView').classList.remove('hidden');
             document.getElementById('comicsView').classList.add('hidden');
             document.getElementById('breadcrumb').classList.add('hidden');
@@ -1039,7 +1046,11 @@
                 From epic battles to everyday funnies, each comic is bursting with creativity and humor.
                 Dive into the wild world of The Dan Comics and discover what happens when imagination knows no bounds!
             `;
+        }
 
+        // Go back to series view
+        function goBack() {
+            goBackSilent();
             // Clear URL
             window.location.hash = '';
         }
