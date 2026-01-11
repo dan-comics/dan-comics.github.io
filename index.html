@@ -649,6 +649,102 @@
         async function init() {
             await loadSeriesFromGitHub();
             loadSeries();
+
+            // Handle initial URL
+            handleRouteChange();
+
+            // Handle browser back/forward buttons
+            window.addEventListener('hashchange', handleRouteChange);
+        }
+
+        // Convert series/folder name to URL slug
+        function nameToSlug(name) {
+            return name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+        }
+
+        // Convert URL slug back to name
+        function slugToName(slug) {
+            const series = comicSeries.find(s => nameToSlug(s.name) === slug);
+            return series ? series.name : null;
+        }
+
+        // Handle route changes from URL
+        async function handleRouteChange() {
+            const hash = window.location.hash.slice(1); // Remove #
+            if (!hash || hash === '/') {
+                // Home page - show series grid
+                if (currentSeries) {
+                    goBack();
+                }
+                return;
+            }
+
+            const parts = hash.split('/').filter(p => p); // Split by / and remove empty
+            if (parts.length === 0) return;
+
+            const seriesSlug = parts[0];
+            const subFolderSlug = parts[1];
+
+            // Find the series
+            const series = comicSeries.find(s => nameToSlug(s.name) === seriesSlug);
+            if (!series) {
+                console.error('Series not found:', seriesSlug);
+                return;
+            }
+
+            // Open the series
+            await openSeriesFromRoute(series, subFolderSlug);
+        }
+
+        // Open series from route (without triggering URL update)
+        async function openSeriesFromRoute(series, subFolderSlug = null) {
+            currentSeries = series;
+
+            document.getElementById('seriesView').classList.add('hidden');
+            document.getElementById('comicsView').classList.remove('hidden');
+            document.getElementById('breadcrumb').classList.remove('hidden');
+
+            // Update header and about section for Band of Bots
+            if (series.name === 'FLL - Band of Bots') {
+                document.getElementById('headerTitle').textContent = 'BAND OF BOTS';
+                document.getElementById('headerSubtitle').textContent = 'FLL Team 71484 - Where Music Meets Robotics';
+                document.getElementById('aboutTitle').textContent = 'About Band of Bots';
+                document.getElementById('aboutText').innerHTML = `
+                    Meet the Band of Bots, FLL Team 71484! We're a group of talented 5th graders from San Diego who share two passions:
+                    creating music together as a band and building amazing robots. Whether we're jamming on our instruments or
+                    engineering innovative solutions, we work as a team, support each other, and have a blast doing it.
+                    From robotics competitions to rock concerts, we're always learning, creating, and rocking out together!
+                `;
+            } else {
+                // Reset to default Dan Comics branding
+                document.getElementById('headerTitle').textContent = 'DAN COMICS';
+                document.getElementById('headerSubtitle').textContent = 'Created by Evan from San Diego';
+                document.getElementById('aboutTitle').textContent = 'About Evan';
+                document.getElementById('aboutText').innerHTML = `
+                    Meet Evan, an 11-year-old comic artist from San Diego, California!
+                    Evan creates hilarious and imaginative adventures featuring Dan and friends.
+                    From epic battles to everyday funnies, each comic is bursting with creativity and humor.
+                    Dive into the wild world of The Dan Comics and discover what happens when imagination knows no bounds!
+                `;
+            }
+
+            // Show/hide sub-tabs
+            const subTabContainer = document.getElementById('subTabContainer');
+            if (series.subFolders && series.subFolders.length > 0) {
+                renderSubTabs(series.subFolders);
+                subTabContainer.classList.remove('hidden');
+
+                // Load specific subfolder or first one
+                let subFolder = series.subFolders[0];
+                if (subFolderSlug) {
+                    const found = series.subFolders.find(sf => nameToSlug(sf.name) === subFolderSlug);
+                    if (found) subFolder = found;
+                }
+                await loadSubFolderFromRoute(subFolder);
+            } else {
+                subTabContainer.classList.add('hidden');
+                await loadComics(series.folder);
+            }
         }
 
         // Load series folders dynamically from GitHub
@@ -783,49 +879,24 @@
 
         // Open a series
         async function openSeries(series) {
-            currentSeries = series;
-            currentSubFolder = null;
+            // Update URL
+            window.location.hash = `#/${nameToSlug(series.name)}`;
+        }
 
-            document.getElementById('seriesView').classList.add('hidden');
-            document.getElementById('comicsView').classList.remove('hidden');
-            document.getElementById('breadcrumb').classList.remove('hidden');
+        // Load a subfolder from route (without triggering URL update)
+        async function loadSubFolderFromRoute(subFolder) {
+            currentSubFolder = subFolder;
 
-            // Update header and about section for Band of Bots
-            if (series.name === 'FLL - Band of Bots') {
-                document.getElementById('headerTitle').textContent = 'BAND OF BOTS';
-                document.getElementById('headerSubtitle').textContent = 'FLL Team 71484 - Where Music Meets Robotics';
-                document.getElementById('aboutTitle').textContent = 'About Band of Bots';
-                document.getElementById('aboutText').innerHTML = `
-                    Meet the Band of Bots, FLL Team 71484! We're a group of talented 5th graders from San Diego who share two passions:
-                    creating music together as a band and building amazing robots. Whether we're jamming on our instruments or
-                    engineering innovative solutions, we work as a team, support each other, and have a blast doing it.
-                    From robotics competitions to rock concerts, we're always learning, creating, and rocking out together!
-                `;
-            } else {
-                // Reset to default Dan Comics branding
-                document.getElementById('headerTitle').textContent = 'DAN COMICS';
-                document.getElementById('headerSubtitle').textContent = 'Created by Evan from San Diego';
-                document.getElementById('aboutTitle').textContent = 'About Evan';
-                document.getElementById('aboutText').innerHTML = `
-                    Meet Evan, an 11-year-old comic artist from San Diego, California!
-                    Evan creates hilarious and imaginative adventures featuring Dan and friends.
-                    From epic battles to everyday funnies, each comic is bursting with creativity and humor.
-                    Dive into the wild world of The Dan Comics and discover what happens when imagination knows no bounds!
-                `;
-            }
+            // Update active sub-tab
+            document.querySelectorAll('.sub-tab-button').forEach((btn, index) => {
+                btn.classList.remove('active');
+                if (currentSeries.subFolders[index] === subFolder) {
+                    btn.classList.add('active');
+                }
+            });
 
-            // Show/hide sub-tabs
-            const subTabContainer = document.getElementById('subTabContainer');
-            if (series.subFolders && series.subFolders.length > 0) {
-                renderSubTabs(series.subFolders);
-                subTabContainer.classList.remove('hidden');
-                // Load first subfolder by default
-                await loadSubFolder(series.subFolders[0], true);
-            } else {
-                subTabContainer.classList.add('hidden');
-                // Load comics from main folder
-                await loadComics(series.folder);
-            }
+            // Load comics from subfolder
+            await loadComics(subFolder.path);
         }
 
         // Render sub-tabs
@@ -849,13 +920,9 @@
             currentSubFolder = subFolder;
 
             if (!skipUpdate) {
-                // Update active sub-tab
-                document.querySelectorAll('.sub-tab-button').forEach(btn => btn.classList.remove('active'));
-                event.target.classList.add('active');
+                // Update URL
+                window.location.hash = `#/${nameToSlug(currentSeries.name)}/${nameToSlug(subFolder.name)}`;
             }
-
-            // Load comics from subfolder
-            await loadComics(subFolder.path);
         }
 
         // Load comics for a folder path
@@ -972,6 +1039,9 @@
                 From epic battles to everyday funnies, each comic is bursting with creativity and humor.
                 Dive into the wild world of The Dan Comics and discover what happens when imagination knows no bounds!
             `;
+
+            // Clear URL
+            window.location.hash = '';
         }
 
         // Check if device is mobile
