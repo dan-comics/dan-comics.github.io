@@ -17,6 +17,24 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
+            transition: background 0.5s ease;
+        }
+
+        body.custom-bg {
+            background: url('Website/FLL - Band of Bots/Background.JPG') center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        body.custom-bg::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: -1;
         }
 
         .header {
@@ -71,30 +89,100 @@
             50% { transform: translateY(-10px); }
         }
 
-        .nav-breadcrumb {
-            background: rgba(255,255,255,0.9);
-            padding: 15px 20px;
-            text-align: center;
-            font-size: 1.1em;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        /* Main Tab Navigation */
+        .tab-container {
+            background: rgba(255,255,255,0.95);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .nav-breadcrumb button {
-            background: #FF6347;
-            color: white;
-            border: 3px solid #000;
-            padding: 10px 20px;
-            font-family: 'Bangers', cursive;
-            font-size: 1.1em;
+        .main-tabs {
+            display: flex;
+            padding: 0;
+            margin: 0;
+            min-width: min-content;
+        }
+
+        .tab-button {
+            flex: 0 0 auto;
+            padding: 20px 30px;
+            border: none;
+            background: #f0f0f0;
             cursor: pointer;
+            font-family: 'Bangers', cursive;
+            font-size: 1.3em;
+            letter-spacing: 1px;
+            border-bottom: 5px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .tab-button:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .tab-button.active {
+            background: white;
+            border-bottom-color: #FF6347;
+            transform: translateY(0);
+        }
+
+        .tab-icon {
+            font-size: 1.5em;
+            margin-right: 8px;
+            display: inline-block;
+        }
+
+        /* Sub-tabs */
+        .sub-tab-container {
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            padding: 15px 20px;
+            display: none;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .sub-tab-container.active {
+            display: block;
+        }
+
+        .sub-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .sub-tab-button {
+            padding: 12px 25px;
+            border: 3px solid #000;
+            background: #FFD700;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.1em;
+            font-weight: bold;
             border-radius: 10px;
             box-shadow: 3px 3px 0 #000;
             transition: all 0.2s;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .nav-breadcrumb button:hover {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0 #000;
+        .sub-tab-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 #000;
+        }
+
+        .sub-tab-button.active {
+            background: #FF6347;
+            color: white;
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 #000;
         }
 
         .container {
@@ -103,66 +191,11 @@
             padding: 40px 20px;
         }
 
-        .series-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         .comics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 30px;
             margin-bottom: 40px;
-        }
-
-        .series-card {
-            background: white;
-            border: 4px solid #000;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
-            position: relative;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .series-card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 7px 7px 0 rgba(0,0,0,0.4);
-        }
-
-        .series-card:active {
-            transform: translate(2px, 2px);
-            box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
-        }
-
-        .series-button-content {
-            text-align: center;
-            width: 100%;
-        }
-
-        .series-card .series-icon {
-            font-size: 50px;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .series-card h3 {
-            font-family: 'Bangers', cursive;
-            font-size: 1.5em;
-            color: #333;
-            text-shadow: 2px 2px 0 rgba(255,215,0,0.5);
-            margin: 0;
         }
 
         .comic-card {
@@ -333,6 +366,28 @@
             display: none;
         }
 
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 2em;
+            color: white;
+            font-family: 'Bangers', cursive;
+            background: rgba(0,0,0,0.5);
+            border-radius: 15px;
+            margin: 20px;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.8em;
+            color: white;
+            font-family: 'Bangers', cursive;
+            background: rgba(0,0,0,0.5);
+            border-radius: 15px;
+            margin: 20px;
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .container {
@@ -347,6 +402,11 @@
             .comic-card img {
                 height: 300px;
             }
+
+            .tab-button {
+                padding: 18px 25px;
+                font-size: 1.2em;
+            }
         }
 
         @media (max-width: 768px) {
@@ -358,24 +418,19 @@
                 font-size: 1.2em;
             }
 
-            .series-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-                padding: 0 10px;
+            .tab-button {
+                padding: 15px 20px;
+                font-size: 1.1em;
             }
 
-            .series-card {
-                min-height: 100px;
-                padding: 15px;
-            }
-
-            .series-card .series-icon {
-                font-size: 40px;
-                margin-bottom: 8px;
-            }
-
-            .series-card h3 {
+            .tab-icon {
                 font-size: 1.3em;
+                margin-right: 5px;
+            }
+
+            .sub-tab-button {
+                padding: 10px 20px;
+                font-size: 1em;
             }
 
             .comics-grid {
@@ -406,7 +461,6 @@
                 right: 10px;
                 font-size: 1.2em;
                 padding: 8px 15px;
-                position: fixed;
             }
 
             .lightbox-nav {
@@ -439,16 +493,8 @@
                 font-size: 1em;
             }
 
-            .series-card h3 {
-                font-size: 1.1em;
-            }
-
-            .series-card .series-icon {
-                font-size: 35px;
-            }
-
-            .nav-breadcrumb button {
-                padding: 8px 15px;
+            .tab-button {
+                padding: 12px 15px;
                 font-size: 1em;
             }
 
@@ -461,15 +507,6 @@
                 padding: 20px 15px;
             }
         }
-
-        /* Loading Animation */
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 2em;
-            color: white;
-            font-family: 'Bangers', cursive;
-        }
     </style>
 </head>
 <body>
@@ -478,19 +515,23 @@
         <div class="subtitle">Created by Evan from San Diego</div>
     </div>
 
-    <div class="nav-breadcrumb hidden" id="breadcrumb">
-        <button onclick="goBack()">← Back to Series</button>
+    <!-- Main Tab Navigation -->
+    <div class="tab-container">
+        <div class="main-tabs" id="mainTabs">
+            <!-- Tabs will be loaded here -->
+        </div>
+    </div>
+
+    <!-- Sub-tab Navigation (for nested folders) -->
+    <div class="sub-tab-container" id="subTabContainer">
+        <div class="sub-tabs" id="subTabs">
+            <!-- Sub-tabs will be loaded here -->
+        </div>
     </div>
 
     <div class="container" id="mainContent">
-        <div id="seriesView" class="series-grid">
-            <!-- Series will be loaded here -->
-        </div>
-
-        <div id="comicsView" class="hidden">
-            <div class="comics-grid" id="comicsList">
-                <!-- Comics will be loaded here -->
-            </div>
+        <div class="comics-grid" id="comicsList">
+            <!-- Comics will be loaded here -->
         </div>
 
         <div class="about-section">
@@ -520,37 +561,41 @@
     </div>
 
     <script>
-        // Comic series data structure - will be populated dynamically
+        // Comic series data structure
         let comicSeries = [];
+        let currentComics = [];
+        let currentComicIndex = 0;
+        let currentSeries = null;
+        let currentSubFolder = null;
 
         // GitHub repository information
         const GITHUB_REPO_OWNER = 'dan-comics';
         const GITHUB_REPO_NAME = 'dan-comics.github.io';
         const GITHUB_API_BASE = 'https://api.github.com';
 
-        // Series icons and colors mapping
-        // To customize a new series, add it here with format: 'Folder Name': { icon: 'emoji', color: '#HEX' }
-        // If a folder is not listed here, it will get a default book icon and random color
+        // Series configuration with icons and colors
         const seriesConfig = {
-            'Origional Dan': { icon: '⭐', color: '#FF6B6B' },
-            'Dan Funnies': { icon: '😂', color: '#4ECDC4' },
-            'Cheez Dame': { icon: '🧀', color: '#FFD93D' },
-            'Dan Music': { icon: '🎵', color: '#95E1D3' },
-            'Dan Ice cream': { icon: '🍦', color: '#F38181' },
-            'Dan Shorts': { icon: '🎬', color: '#AA96DA' },
-            'Dan Science': { icon: '🔬', color: '#FCBAD3' },
-            'Dan Charaters': { icon: '👥', color: '#FFA07A' },
-            'More Series Here': { icon: '✨', color: '#A8E6CF' }
+            'Origional Dan': { icon: '⭐', color: '#FF6B6B', background: null },
+            'Dan Funnies': { icon: '😂', color: '#4ECDC4', background: null },
+            'Cheez Dame': { icon: '🧀', color: '#FFD93D', background: null },
+            'Dan Music': { icon: '🎵', color: '#95E1D3', background: null },
+            'Dan Ice cream': { icon: '🍦', color: '#F38181', background: null },
+            'Dan Shorts': { icon: '🎬', color: '#AA96DA', background: null },
+            'Dan Science': { icon: '🔬', color: '#FCBAD3', background: null },
+            'Dan Character': { icon: '👥', color: '#FFA07A', background: null },
+            'FLL - Band of Bots': { icon: '🤖', color: '#5C6BC0', background: 'Website/FLL - Band of Bots/Background.JPG' },
+            'More Series Here': { icon: '✨', color: '#A8E6CF', background: null }
         };
-
-        let currentSeries = null;
-        let currentComics = [];
-        let currentComicIndex = 0;
 
         // Initialize the page
         async function init() {
             await loadSeriesFromGitHub();
-            loadSeries();
+            renderTabs();
+
+            // Load first series by default
+            if (comicSeries.length > 0) {
+                await loadSeries(comicSeries[0]);
+            }
         }
 
         // Load series folders dynamically from GitHub
@@ -566,25 +611,29 @@
                 }
 
                 const items = await response.json();
-
-                // Filter to only directories (folders)
                 const folders = items.filter(item => item.type === 'dir');
 
                 // Create series array from discovered folders
-                comicSeries = folders.map(folder => {
+                comicSeries = await Promise.all(folders.map(async folder => {
                     const folderName = folder.name;
                     const config = seriesConfig[folderName] || {
                         icon: '📚',
-                        color: getRandomColor()
+                        color: getRandomColor(),
+                        background: null
                     };
+
+                    // Check for subfolders
+                    const subFolders = await getSubFolders(folderName);
 
                     return {
                         name: folderName,
                         folder: folderName,
                         color: config.color,
-                        icon: config.icon
+                        icon: config.icon,
+                        background: config.background,
+                        subFolders: subFolders
                     };
-                });
+                }));
 
                 console.log('Loaded series from GitHub:', comicSeries);
             } catch (error) {
@@ -593,18 +642,44 @@
             }
         }
 
+        // Get subfolders for a series
+        async function getSubFolders(seriesFolder) {
+            try {
+                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website/${encodeURIComponent(seriesFolder)}`;
+                const response = await fetch(url);
+
+                if (!response.ok) return [];
+
+                const items = await response.json();
+                const folders = items.filter(item => item.type === 'dir');
+
+                return folders.map(folder => ({
+                    name: folder.name,
+                    path: `${seriesFolder}/${folder.name}`
+                }));
+            } catch (error) {
+                console.error('Error loading subfolders:', error);
+                return [];
+            }
+        }
+
         // Fallback series if GitHub API fails
         function loadFallbackSeries() {
             comicSeries = [
-                { name: "Origional Dan", folder: "Origional Dan", color: "#FF6B6B", icon: "⭐" },
-                { name: "Dan Funnies", folder: "Dan Funnies", color: "#4ECDC4", icon: "😂" },
-                { name: "Cheez Dame", folder: "Cheez Dame", color: "#FFD93D", icon: "🧀" },
-                { name: "Dan Music", folder: "Dan Music", color: "#95E1D3", icon: "🎵" },
-                { name: "Dan Ice cream", folder: "Dan Ice cream", color: "#F38181", icon: "🍦" },
-                { name: "Dan Shorts", folder: "Dan Shorts", color: "#AA96DA", icon: "🎬" },
-                { name: "Dan Science", folder: "Dan Science", color: "#FCBAD3", icon: "🔬" },
-                { name: "Dan Charaters", folder: "Dan Charaters", color: "#FFA07A", icon: "👥" },
-                { name: "More Series Here", folder: "More Series Here", color: "#A8E6CF", icon: "✨" }
+                { name: "Origional Dan", folder: "Origional Dan", color: "#FF6B6B", icon: "⭐", background: null, subFolders: [] },
+                { name: "Dan Funnies", folder: "Dan Funnies", color: "#4ECDC4", icon: "😂", background: null, subFolders: [] },
+                { name: "Cheez Dame", folder: "Cheez Dame", color: "#FFD93D", icon: "🧀", background: null, subFolders: [] },
+                { name: "Dan Music", folder: "Dan Music", color: "#95E1D3", icon: "🎵", background: null, subFolders: [] },
+                { name: "Dan Ice cream", folder: "Dan Ice cream", color: "#F38181", icon: "🍦", background: null, subFolders: [] },
+                { name: "Dan Shorts", folder: "Dan Shorts", color: "#AA96DA", icon: "🎬", background: null, subFolders: [] },
+                { name: "Dan Science", folder: "Dan Science", color: "#FCBAD3", icon: "🔬", background: null, subFolders: [] },
+                { name: "Dan Character", folder: "Dan Character", color: "#FFA07A", icon: "👥", background: null, subFolders: [] },
+                { name: "FLL - Band of Bots", folder: "FLL - Band of Bots", color: "#5C6BC0", icon: "🤖", background: "Website/FLL - Band of Bots/Background.JPG", subFolders: [
+                    { name: "Team Fun", path: "FLL - Band of Bots/Team Fun" },
+                    { name: "The Airlock IP", path: "FLL - Band of Bots/The Airlock IP" },
+                    { name: "The Band", path: "FLL - Band of Bots/The Band" }
+                ]},
+                { name: "More Series Here", folder: "More Series Here", color: "#A8E6CF", icon: "✨", background: null, subFolders: [] }
             ];
         }
 
@@ -614,47 +689,93 @@
             return colors[Math.floor(Math.random() * colors.length)];
         }
 
-        // Load all series
-        function loadSeries() {
-            const seriesView = document.getElementById('seriesView');
-            seriesView.innerHTML = '';
+        // Render main tabs
+        function renderTabs() {
+            const mainTabs = document.getElementById('mainTabs');
+            mainTabs.innerHTML = '';
 
             comicSeries.forEach((series, index) => {
-                const card = document.createElement('div');
-                card.className = 'series-card';
-                card.style.background = series.color;
-                card.onclick = () => loadComics(series);
+                const tab = document.createElement('button');
+                tab.className = 'tab-button';
+                tab.style.borderBottomColor = series.color;
+                tab.innerHTML = `<span class="tab-icon">${series.icon}</span>${series.name}`;
+                tab.onclick = () => loadSeries(series);
 
-                card.innerHTML = `
-                    <div class="series-button-content">
-                        <span class="series-icon">${series.icon}</span>
-                        <h3>${series.name}</h3>
-                    </div>
-                `;
-
-                seriesView.appendChild(card);
+                mainTabs.appendChild(tab);
             });
         }
 
-        // Load comics for a specific series
-        async function loadComics(series) {
+        // Load a series
+        async function loadSeries(series) {
             currentSeries = series;
-            document.getElementById('seriesView').classList.add('hidden');
-            document.getElementById('comicsView').classList.remove('hidden');
-            document.getElementById('breadcrumb').classList.remove('hidden');
+            currentSubFolder = null;
 
+            // Update active tab
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.tab-button').classList.add('active');
+
+            // Apply custom background if exists
+            if (series.background) {
+                document.body.classList.add('custom-bg');
+                document.body.style.backgroundImage = `url('${series.background}')`;
+            } else {
+                document.body.classList.remove('custom-bg');
+                document.body.style.backgroundImage = '';
+            }
+
+            // Show/hide sub-tabs
+            const subTabContainer = document.getElementById('subTabContainer');
+            if (series.subFolders && series.subFolders.length > 0) {
+                renderSubTabs(series.subFolders);
+                subTabContainer.classList.add('active');
+                // Load first subfolder by default
+                await loadSubFolder(series.subFolders[0]);
+            } else {
+                subTabContainer.classList.remove('active');
+                // Load comics from main folder
+                await loadComics(series.folder);
+            }
+        }
+
+        // Render sub-tabs
+        function renderSubTabs(subFolders) {
+            const subTabs = document.getElementById('subTabs');
+            subTabs.innerHTML = '';
+
+            subFolders.forEach(subFolder => {
+                const tab = document.createElement('button');
+                tab.className = 'sub-tab-button';
+                tab.textContent = subFolder.name;
+                tab.onclick = () => loadSubFolder(subFolder);
+
+                subTabs.appendChild(tab);
+            });
+        }
+
+        // Load a subfolder
+        async function loadSubFolder(subFolder) {
+            currentSubFolder = subFolder;
+
+            // Update active sub-tab
+            document.querySelectorAll('.sub-tab-button').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.sub-tab-button').classList.add('active');
+
+            // Load comics from subfolder
+            await loadComics(subFolder.path);
+        }
+
+        // Load comics for a folder path
+        async function loadComics(folderPath) {
             const comicsList = document.getElementById('comicsList');
             comicsList.innerHTML = '<div class="loading">Loading comics...</div>';
 
-            // Simulate loading comics from the folder
-            // In a real implementation, you would fetch this data from the server
-            const comics = await getComicsForSeries(series.folder);
+            const comics = await getComicsForFolder(folderPath);
             currentComics = comics;
 
             comicsList.innerHTML = '';
 
             if (comics.length === 0) {
-                comicsList.innerHTML = '<div class="loading">No comics found in this series yet!</div>';
+                comicsList.innerHTML = '<div class="empty-message">No comics found in this folder yet!</div>';
                 return;
             }
 
@@ -679,25 +800,29 @@
                 card.appendChild(titleDiv);
                 comicsList.appendChild(card);
             });
+
+            // Scroll to comics
+            comicsList.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // Get comics for a series - dynamically from GitHub
-        async function getComicsForSeries(folder) {
+        // Get comics for a folder path
+        async function getComicsForFolder(folderPath) {
             try {
-                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website/${encodeURIComponent(folder)}`;
+                const url = `${GITHUB_API_BASE}/repos/${GITHUB_REPO_OWNER}/${GITHUB_REPO_NAME}/contents/Website/${encodeURIComponent(folderPath)}`;
                 const response = await fetch(url);
 
                 if (!response.ok) {
-                    console.error('Failed to load comics from GitHub for', folder);
+                    console.error('Failed to load comics from GitHub for', folderPath);
                     return [];
                 }
 
                 const items = await response.json();
 
-                // Filter to only image files (jpeg, jpg, png, gif, pdf)
+                // Filter to only image files (jpeg, jpg, png, gif, pdf) and exclude Background.JPG
                 const imageExtensions = ['.jpeg', '.jpg', '.png', '.gif', '.pdf'];
                 const imageFiles = items.filter(item => {
                     if (item.type !== 'file') return false;
+                    if (item.name === 'Background.JPG') return false; // Exclude background image
                     const ext = item.name.toLowerCase().substring(item.name.lastIndexOf('.'));
                     return imageExtensions.includes(ext);
                 });
@@ -705,24 +830,16 @@
                 // Convert to comic objects
                 const comics = imageFiles.map(file => ({
                     title: file.name.replace(/\.(jpeg|jpg|png|gif|pdf)$/i, ''),
-                    path: `Website/${folder}/${file.name}`
+                    path: `Website/${folderPath}/${file.name}`
                 }));
 
-                console.log(`Loaded ${comics.length} comics from ${folder}:`, comics);
+                console.log(`Loaded ${comics.length} comics from ${folderPath}:`, comics);
                 return comics;
 
             } catch (error) {
                 console.error('Error loading comics from GitHub:', error);
                 return [];
             }
-        }
-
-        // Go back to series view
-        function goBack() {
-            document.getElementById('seriesView').classList.remove('hidden');
-            document.getElementById('comicsView').classList.add('hidden');
-            document.getElementById('breadcrumb').classList.add('hidden');
-            currentSeries = null;
         }
 
         // Open lightbox
@@ -774,19 +891,6 @@
                 closeLightbox();
             }
         });
-
-        // Utility function to adjust color brightness
-        function adjustColor(color, percent) {
-            const num = parseInt(color.replace("#",""), 16);
-            const amt = Math.round(2.55 * percent);
-            const R = (num >> 16) + amt;
-            const G = (num >> 8 & 0x00FF) + amt;
-            const B = (num & 0x0000FF) + amt;
-            return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 +
-                (G<255?G<1?0:G:255)*0x100 +
-                (B<255?B<1?0:B:255))
-                .toString(16).slice(1);
-        }
 
         // Initialize on page load
         init();
